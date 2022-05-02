@@ -1,5 +1,5 @@
-INFO 201 Project Proposal
-Group 18 Section BC
+INFO 201 Project Proposal\
+Group 18 Section BC\
 Group Members: Steven Hu, Vinson Liu, Ben Parker, Chi Chou
 
 **Domain of Interest: Video Games**\
