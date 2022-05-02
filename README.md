@@ -3,7 +3,7 @@ Group 18 Section BC\
 Group Members: Steven Hu, Vinson Liu, Ben Parker, Chi Chou
 
 
-**Domain of Interest: Video Games**\
+**Domain of Interest: Video Games**
 
 For our final project, we are interested in gathering statistics on video games.  For most of the pandemic, video games were a way to escape and socialize with other players and arguably helped reduce stress and improve mental health during this time.  Some related projects include an article posted by USA Today in 2021, and api based websites such as light.gg and lol.wiz that gather statistics directly from games such as League of Legends and Destiny 2.  We hope to answer questions around video game usage during the pandemic such as "*How has COVID changed video game sales and popularity?*", "*How has video games impacted mental health during COVID?*" and looking for negative impacts of video games with questions such as "*How has COVID affected video game addiction?*"
 
