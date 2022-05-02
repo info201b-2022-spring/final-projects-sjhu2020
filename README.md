@@ -8,11 +8,11 @@ For our final project, we are interested in gathering statistics on video games.
 **Datasets**
 
 For each dataset we answered the following questions:\
-*- Where did you download the data (e.g., a web URL)?\
-*- How was the data collected or generated? Make sure to explain who collected the data (not necessarily the same people that host the data), and who or what the data is about?\
-*- How many observations (rows) are in your data?\
-*- How many features (columns) are in the data?\
-*- What questions (from above) can be answered using the data in this dataset?
+*- Where did you download the data (e.g., a web URL)?*\
+*- How was the data collected or generated? Make sure to explain who collected the data (not necessarily the same people that host the data), and who or what the data is about?*\
+*- How many observations (rows) are in your data?*\
+*- How many features (columns) are in the data?*\
+*- What questions (from above) can be answered using the data in this dataset?*
 
 1. https://www.kaggle.com/datasets/gregorut/videogamesales *(games.csv)*
 - This dataset is from Kaggle
