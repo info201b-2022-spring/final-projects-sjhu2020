@@ -1,6 +1,6 @@
 library("dplyr")
 
-games_df <- read.csv("/Users/ron0821/Desktop/INFO 201/final-projects-sjhu2020/Games.csv")
+games_df <- read.csv("data/Games.csv")
 
 summary_info <- list()
 
