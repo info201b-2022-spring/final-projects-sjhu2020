@@ -1,0 +1,26 @@
+---
+title: "Exploratory Analysis"
+output: html_document
+---
+
+### Part 1
+
+### Part 2
+
+### Chart 1
+```{r}
+
+```
+
+### Chart 2
+```{r genre_chart, echo=FALSE, message=FALSE}
+source("chart_2.r")
+plot(genre_play_time)
+```
+
+### Chart 3
+```{r trendline, echo=FALSE, message=FALSE}
+source("chart_3.r")
+plot(genre_trendline)
+```
+

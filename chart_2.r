@@ -6,7 +6,7 @@ needed2 <- file2 %>%
   select(Title, Metadata.Genres, `Features.Online?`, `Length.All PlayStyles.Average`) %>% 
     filter(Metadata.Genres %in% c("Action", "Adventure", "Simulation", "Sports", "Strategy"))
 
-chart2 <- ggplot(needed2, 
+genre_play_time <- ggplot(needed2, 
                  aes(x = `Length.All PlayStyles.Average`)) +
   geom_histogram(fill = "blue", color = "red", alpha = 0.7)+
   facet_wrap(~Metadata.Genres) +
@@ -17,5 +17,5 @@ chart2 <- ggplot(needed2,
     x = "Average Time Spent (Hr)",
     y = "Amount"
   )
-  
-chart2
+
+genre_play_time
