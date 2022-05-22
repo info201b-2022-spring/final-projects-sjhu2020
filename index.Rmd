@@ -11,8 +11,11 @@ title: "Exploratory Analysis"
 #_"How have video games impacted mental health during COVID?"_
 #_"How has COVID affected video game addiction?"_
 
-#We discovered a number of statistics about the 175 observations (games) in our dataset through our calculations. 
-#The most popular PC game sold 42 million copies in comparison to 1 million by the least popular PC game.
+#The dataset we used is from Kaggle
+#It is uploaded by "KHAIID"
+#It is about PC game sales, showing the best and worst selling games
+#There are **7 columns** in the dataset, totally **175 observations**
+#The _most popular_ PC game sold **42 million copies** in comparison to **1 million** by the _least popular_ PC game.
 #This gives us a wide range in popularity of games to work with. 
 #The most popular game in our dataset was PlayerUnknown’s Battlegrounds, which was released in December of 2017. 
 
