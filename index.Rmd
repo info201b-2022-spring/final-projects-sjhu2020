@@ -28,14 +28,18 @@ output: html_document
 ### Part 1
 
 ### Part 2
+```{r aggregate_table, echo=FALSE, message=FALSE}
+source("aggregate.r")
+```
+
 
 ### Chart 1
-```{r}
-
+```{r cloud, echo=FALSE, message=FALSE, warning=FALSE}
+source("chart_1.r")
 ```
 
 ### Chart 2
-```{r genre_chart, echo=FALSE, message=FALSE}
+```{r genre_chart, echo=FALSE, message=FALSE, warning=FALSE}
 source("chart_2.r")
 plot(genre_play_time)
 ```
