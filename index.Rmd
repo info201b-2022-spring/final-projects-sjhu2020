@@ -1,9 +1,23 @@
 ---
 title: "Exploratory Analysis"
 
-We are interested in gathering statistics on video games for our final project. For most of the pandemic, video games were a way to escape and socialize with other players and arguably helped reduce stress and improve mental health during this time. Some related projects include an article posted by USA Today in 2021 and api based websites such as light.gg and lol.wiz that gathers statistics directly from games such as League of Legends and Destiny 2. We hope to answer questions about video game usage during the pandemic such as _"How has COVID changed video game sales and popularity?"_, _"How have video games impacted mental health during COVID?"_ and looking for negative impacts of video games with questions such as _"How has COVID affected video game addiction?"_
+#We are interested in gathering statistics on video games for our final project.
+#For most of the pandemic, video games were a way to escape and socialize with other players.
+#They helped reduce stress and improve mental health during this time.
+#Some related projects include an article posted by USA Today in 2021 and api based websites.
+#Such as light.gg and lol.wiz that gathers statistics directly from games such as League of Legends and Destiny 2. 
+#We hope to answer questions about video game usage during the pandemic such as...
+#_"How has COVID changed video game sales and popularity?"_
+#_"How have video games impacted mental health during COVID?"_
+#_"How has COVID affected video game addiction?"_
 
-We discovered a number of statistics about the **175 observations** (games) in our dataset through our calculations. The most popular PC game sold 42 million copies in comparison to 1 million by the least popular PC game, giving us a wide range in popularity of games to work with. The most popular game in our dataset was PlayerUnknown’s Battlegrounds, which was released in December of 2017. 
+#We discovered a number of statistics about the 175 observations (games) in our dataset through our calculations. 
+#The most popular PC game sold 42 million copies in comparison to 1 million by the least popular PC game.
+#This gives us a wide range in popularity of games to work with. 
+#The most popular game in our dataset was PlayerUnknown’s Battlegrounds, which was released in December of 2017. 
+
+
+
 
 output: html_document
 ---
