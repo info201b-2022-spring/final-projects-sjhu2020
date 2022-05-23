@@ -16,7 +16,7 @@ We are interested in gathering statistics on video games for our final project. 
 
 ### Part 1 - Summary Statistics
 
-We decided to use the Games.csv dataset which consists of 175 observations.
+We decided to use the Games.csv dataset which consists of 175 observations. The most popular game was PlayerUnknown's Battlegorund, selling 42 million copies after its release in December of 2017. The least popular games solid only 1 million. 
 
 ### Part 2 - Aggregate Table
 
@@ -25,11 +25,16 @@ source("aggregate.r")
 kable(genres_grouped_freq_df)
 ```
 
+This table takes the dataset from game.csv and takes the genre columns to group the games by genre. It displays the 61 different genres and summarizes the number of games under each. For example, if there were 5 games in the action genre, it would display in the **"Genre"** column _"Action"_, with the number _5_ in the **"Total"** column next to it.
+
+
 ### Chart 1
 
 ```{r cloud, echo=FALSE, message=FALSE, warning=FALSE}
 source("chart_1.r")
 ```
+
+For Chart 1, we took the data from the Aggregate Table and produced a world cloud. It displays an easy to read visual where the genres with greater totals appear larger, and the less totalled ones appear smaller. We included genres with 3+ occurences, totalling 19 genres.  It gives us a wide range of data and allows us to see that _Action role-playing_ is the most popular genre.
 
 ### Chart 2
 
@@ -38,9 +43,13 @@ source("chart_2.r")
 plot(genre_play_time)
 ```
 
+For this facet histogram,  we decided to look at the average time spend to complete the games of each genre. Each histogram represents one genre, the x axis is the _amount of time spent_ and the y axis the the _number of games_ that takes the given time to complete. By looking at each histogram, we can tell that most people prefer action games, as it has the highest amount. We can also tell that while sports is the second most played genre, it doesn't take as long to complete it. This could be because some sport games aren't made to be "completed", it's made so the player can experience the sport whenever they want, and stop whenever they want.
+
 ### Chart 3
 
 ```{r trendline, echo=FALSE, message=FALSE}
 source("chart_3.r")
 plot(genre_trendline)
 ```
+
+For Chart # we decided to create a trendline based on popularity of google trends from 2019 to present day. Virtual Reality (VR) games were by far the most popular, doubling and tripling the amounts of other genres. This may be due to the realse of popular VR games _Hitman 3_, _I Expect You to Die 2_, and _Lone Echo2_. It may also be due the Covid-19 pandemic, and the increased need for entertainment that didn't involve person to person contact. Virtual Reality games allow for an experence and movement similar to that of an outdoor actviity, but within the confinment of your home.
