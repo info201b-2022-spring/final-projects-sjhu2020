@@ -16,6 +16,8 @@ We are interested in gathering statistics on video games for our final project. 
 
 ### Part 1 - Summary Statistics
 
+We decided to use the Games.csv dataset which consists of 175 observations.
+
 ### Part 2 - Aggregate Table
 
 ```{r aggregate_table, echo=FALSE, message=FALSE}
