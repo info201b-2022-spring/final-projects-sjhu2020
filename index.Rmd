@@ -1,36 +1,26 @@
 ---
 title: "Exploratory Analysis"
 
-#We are interested in gathering statistics on video games for our final project.
-#For most of the pandemic, video games were a way to escape and socialize with other players.
-#They helped reduce stress and improve mental health during this time.
-#Some related projects include an article posted by USA Today in 2021 and api based websites.
-#Such as light.gg and lol.wiz that gathers statistics directly from games such as League of Legends and Destiny 2. 
-#We hope to answer questions about video game usage during the pandemic such as...
-#_"How has COVID changed video game sales and popularity?"_
-#_"How have video games impacted mental health during COVID?"_
-#_"How has COVID affected video game addiction?"_
-
-#The dataset we used is from Kaggle
-#It is uploaded by "KHAIID"
-#It is about PC game sales, showing the best and worst selling games
-#There are **7 columns** in the dataset, totally **175 observations**
-#The _most popular_ PC game sold **42 million copies** in comparison to **1 million** by the _least popular_ PC game.
-#This gives us a wide range in popularity of games to work with. 
-#The most popular game in our dataset was PlayerUnknown’s Battlegrounds, which was released in December of 2017. 
-
-
-
-
 output: html_document
 ---
 
-### Part 1
+### Introduction
 
-### Part 2
+We are interested in gathering statistics on video games for our final project. For most of the pandemic, video games were a way to escape and socialize with other players. They helped reduce stress and improve mental health during this time. Some related projects include an article posted by USA Today in 2021 and api based websites such as light.gg and lol.wiz that gathers statistics directly from games such as League of Legends and Destiny 2. We hope to answer questions about video game usage during the pandemic such as...
+
+*"How has COVID changed video game sales and popularity?"*
+
+*"How have video games impacted mental health during COVID?"*
+
+*"How has COVID affected video game addiction?"*
+
+### Part 1 - Summary Statistics
+
+### Part 2 - Aggregate Table
 
 ```{r aggregate_table, echo=FALSE, message=FALSE}
 source("aggregate.r")
+kable(genres_grouped_freq_df)
 ```
 
 ### Chart 1
