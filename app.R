@@ -2,6 +2,8 @@ library(shiny)
 library(dplyr)
 library(fmsb)
 library(wordcloud)
+library(lubridate)
+library(reshape2)
 
 char_df <- read.csv("data/characters.csv")
 timeline_df <- read.csv("data/multiTimeline.csv")
@@ -45,16 +47,36 @@ cloud_page<- tabPanel(
   plotOutput(outputId = 'cloud')
 )
 
+genre_trend <- tabPanel(
+  "Genre Trend",
+    sidebarPanel( # some reorganizing
+      h3("Select Time"),
+      sliderInput(
+        inputId = "time",
+        label = "Choose the Time Frame",
+        min = as.Date("2019-01-06"),
+        max = as.Date("2022-05-15"),
+        value = c(as.Date("2019-01-06"), as.Date("2022-05-15"))
+      ),
+    ),
+    
+    mainPanel(
+      plotOutput(outputId = 'line')
+    )
+)
+
 # Define UI for application that draws a histogram
 ui <- navbarPage( # to have multiple pages use navbar instead of fluid
   "MarioKart Demo",
   summary_page,
   analysis_page,
-  cloud_page
+  cloud_page,
+  genre_trend
 )
 
 # Define server logic required to draw a histogram
 server <- function(input, output) {
+  
   make_radar_df <- function(char_name) {
     rd_df <- select(char_df, -c(Character, Class))
     
@@ -68,23 +90,47 @@ server <- function(input, output) {
     # lets glue all the data frames together (like a lasagna)
     return(do.call("rbind", list(max_df, min_df, data_pt)))
   }
+  
   output$table <- renderTable(
     {
       #return(filter(char_df, Character == input$char))
       return(make_radar_df(input$char))
     }
   )
+  
   output$radar <- renderPlot(
     {
       radarchart(make_radar_df(input$char))
     }
   )
+  
   output$cloud <- renderPlot(
     {
       genres_df <- select(games_df, Genre)
       genres_grouped_df <- group_by(genres_df, Genre)
       genres_grouped_freq_df <- summarize(genres_grouped_df, Total = length(Genre))
       wordcloud(genres_grouped_freq_df$Genre , genres_grouped_freq_df$Total ,  alpha=0.9 , rot.per=0.3 )
+    }
+  )
+  
+  output$line <- renderPlot(
+    {
+      file3 <- read_csv(file = "data/multiTimeline.csv")
+      file3 <- file3 %>% filter(dates >= input$time[1])
+      file3 <- file3 %>% filter(dates <= input$time[2])
+      melted_df <- melt(file3, id = "dates")
+      
+      genre_trendline <- ggplot(melted_df, aes(x = dates, y = value, color = variable)) + 
+        geom_line() +
+        labs(
+          title = "Video Game Search Popularity by Genre",
+          caption = "Source: Google Trends",
+          color = "Video Game Genre",
+          x = "Date From 2019 ~ Now, Collected Once A Week",
+          y = "Number of Searches"
+        )
+      
+      return(genre_trendline)
     }
   )
 }
