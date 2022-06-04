@@ -2,6 +2,8 @@
 title: "Exploratory Analysis"
 
 output: html_document
+
+runtime: shiny
 ---
 
 ### Introduction
@@ -53,3 +55,4 @@ plot(genre_trendline)
 ```
 
 For this line trend graph, we focused on how often each genre of games were searched on google with google trends. Since our group wanted to see the effects of COVID-19 on video games, we chose to begin from the start of 2019 (pre-Covid) to present time. Each line represents one genre, and from this graph, VR surpass all the other genres by a lot. we think this is because it is relatively new and more people are curious about it. It may also be due the Covid-19 pandemic, and the increased need for entertainment that didn't involve person to person contact. Virtual Reality games allow for an experience and movement similar to that of an outdoor activity, but within the confinment of your home. Other than that, it does match the data from chart 2, where actions games were still the most searched. Finally, we chose to omit the sports genre because the search for "sport games" on google usually means the actual physical ones like NBA or MLB.
+

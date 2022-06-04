@@ -4,6 +4,8 @@ library(fmsb)
 library(wordcloud)
 library(lubridate)
 library(reshape2)
+library(tidyverse)
+library(knitr)
 
 char_df <- read.csv("data/characters.csv")
 timeline_df <- read.csv("data/multiTimeline.csv")
@@ -47,9 +49,28 @@ cloud_page<- tabPanel(
   plotOutput(outputId = 'cloud')
 )
 
+time_spent <- tabPanel(
+  "Time Spent",
+  #includeCSS("styles.css"),
+  sidebarPanel( # some reorganizing
+    h3("Select Genre"),
+    selectInput(
+      inputId = "genre",
+      label = "Choose the Game Genre",
+      choices = list("Action" , "Adventure", "Simulation", "Sports", "Strategy")
+    ),
+  ),
+  
+  mainPanel(
+    plotOutput(outputId = 'hist'),
+    dataTableOutput(outputId = "tableHist")
+  )
+)
+
 genre_trend <- tabPanel(
   "Genre Trend",
-    sidebarPanel( # some reorganizing
+  #includeCSS("styles.css"),
+  sidebarPanel( # some reorganizing
       h3("Select Time"),
       sliderInput(
         inputId = "time",
@@ -61,8 +82,10 @@ genre_trend <- tabPanel(
     ),
     
     mainPanel(
-      plotOutput(outputId = 'line')
+      plotOutput(outputId = 'line'),
+      dataTableOutput(outputId = "tableLine")
     )
+
 )
 
 # Define UI for application that draws a histogram
@@ -71,6 +94,7 @@ ui <- navbarPage( # to have multiple pages use navbar instead of fluid
   summary_page,
   analysis_page,
   cloud_page,
+  time_spent,
   genre_trend
 )
 
@@ -131,6 +155,39 @@ server <- function(input, output) {
         )
       
       return(genre_trendline)
+    }
+  )
+  
+  output$tableLine <- renderDataTable(
+    {
+      file3 <- read_csv(file = "data/multiTimeline.csv")
+      #file3 <- file3 %>% pull(date)
+      file3 <- file3 %>% filter(dates >= input$time[1])
+      file3 <- file3 %>% filter(dates <= input$time[2])
+      return(file3)
+    }
+  )
+  
+  output$hist <- renderPlot(
+    {
+      file2 <- read_csv(file = "data/video_games.csv")
+      
+      needed2 <- file2 %>% 
+        select(Title, Metadata.Genres, `Features.Online?`, `Length.All PlayStyles.Average`) %>% 
+        filter(Metadata.Genres == input$genre)
+      
+      genre_play_time <- ggplot(needed2, 
+                                aes(x = `Length.All PlayStyles.Average`)) +
+        geom_histogram(fill = "blue", color = "red", alpha = 0.7)+
+        labs(
+          title = "Time Spend on Completing Based on Genre",
+          subtitle = "Used The Five Major Genre",
+          caption = "Source: video_games.csv",
+          x = "Average Time Spent (Hr)",
+          y = "Amount"
+        )
+      
+      return(genre_play_time)
     }
   )
 }
