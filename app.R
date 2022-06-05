@@ -1,4 +1,5 @@
 library(shiny)
+library(plotly)
 library(dplyr)
 library(fmsb)
 library(wordcloud)
@@ -7,41 +8,21 @@ library(reshape2)
 library(tidyverse)
 library(knitr)
 
+
 char_df <- read.csv("data/characters.csv")
 timeline_df <- read.csv("data/multiTimeline.csv")
 games_df <- read.csv("data/Games.csv", encoding = "UTF-8")
 
 summary_page <- tabPanel( # initializing our pages as variables will make organization much easier
   "Summary", # text(a title) is required at minimum, cannot be empty
-  titlePanel("Examining characters in Mario Kart"),
-  p("This visualiation lets you examine various characters in the game.")
+  titlePanel("Summary of our project"),
+  includeMarkdown("summary.Rmd")
   
 ) 
 
 analysis_page <- tabPanel(
-  "Analysis",
-  #selectInput( # our old code from last lecture!
-  #  inputId = "char",
-  #  label = "Select a character!",
-  #  choices = char_df$Character
-  #),
-  #tableOutput(outputId = 'table'),
-  #plotOutput(outputId = 'radar')
-  sidebarLayout(
-    sidebarPanel( # some reorganizing
-      h3("Control Panel"),
-      selectInput(
-        inputId = "char",
-        label = "Select a character!",
-        choices = char_df$Character
-      ),
-      
-    ),
-    mainPanel(
-      plotOutput(outputId = 'radar'),
-      tableOutput(outputId = 'table')
-    )
-  )
+  "Intro",
+  includeMarkdown("intro.Rmd")
 ) 
 
 cloud_page<- tabPanel(
@@ -59,11 +40,12 @@ time_spent <- tabPanel(
       label = "Choose the Game Genre",
       choices = list("Action" , "Adventure", "Simulation", "Sports", "Strategy")
     ),
+    bsTooltip(id = "someInput", title = "This is an input", 
+              placement = "left", trigger = "hover")
   ),
   
   mainPanel(
-    plotOutput(outputId = 'hist'),
-    dataTableOutput(outputId = "tableHist")
+    plotlyOutput(outputId = 'hist')
   )
 )
 
@@ -90,52 +72,16 @@ genre_trend <- tabPanel(
 
 # Define UI for application that draws a histogram
 ui <- navbarPage( # to have multiple pages use navbar instead of fluid
-  "MarioKart Demo",
-  summary_page,
+  "Video Game Analysis",
   analysis_page,
   cloud_page,
   time_spent,
-  genre_trend
+  genre_trend,
+  summary_page
 )
 
 # Define server logic required to draw a histogram
-server <- function(input, output) {
-  
-  make_radar_df <- function(char_name) {
-    rd_df <- select(char_df, -c(Character, Class))
-    
-    # we need the max and min of all features for a radar chart to work
-    min_df <- summarize_all(rd_df, min)
-    max_df <- summarize_all(rd_df, max)
-    
-    data_pt <- filter(char_df, Character == char_name)
-    data_pt <- select(data_pt, -c(Character, Class))
-    
-    # lets glue all the data frames together (like a lasagna)
-    return(do.call("rbind", list(max_df, min_df, data_pt)))
-  }
-  
-  output$table <- renderTable(
-    {
-      #return(filter(char_df, Character == input$char))
-      return(make_radar_df(input$char))
-    }
-  )
-  
-  output$radar <- renderPlot(
-    {
-      radarchart(make_radar_df(input$char))
-    }
-  )
-  
-  output$cloud <- renderPlot(
-    {
-      genres_df <- select(games_df, Genre)
-      genres_grouped_df <- group_by(genres_df, Genre)
-      genres_grouped_freq_df <- summarize(genres_grouped_df, Total = length(Genre))
-      wordcloud(genres_grouped_freq_df$Genre , genres_grouped_freq_df$Total ,  alpha=0.9 , rot.per=0.3 )
-    }
-  )
+server <- function(session, input, output) {
   
   output$line <- renderPlot(
     {
@@ -168,7 +114,7 @@ server <- function(input, output) {
     }
   )
   
-  output$hist <- renderPlot(
+  output$hist <- renderPlotly(
     {
       file2 <- read_csv(file = "data/video_games.csv")
       
@@ -176,8 +122,13 @@ server <- function(input, output) {
         select(Title, Metadata.Genres, `Features.Online?`, `Length.All PlayStyles.Average`) %>% 
         filter(Metadata.Genres == input$genre)
       
+      needed2 <- needed2%>% 
+        rename(
+          `Avg Time Spent (Hr)` = `Length.All PlayStyles.Average`
+        )
+      
       genre_play_time <- ggplot(needed2, 
-                                aes(x = `Length.All PlayStyles.Average`)) +
+                                aes(x = `Avg Time Spent (Hr)`)) +
         geom_histogram(fill = "blue", color = "red", alpha = 0.7)+
         labs(
           title = "Time Spend on Completing Based on Genre",
@@ -186,10 +137,14 @@ server <- function(input, output) {
           x = "Average Time Spent (Hr)",
           y = "Amount"
         )
+
       
-      return(genre_play_time)
+      newFig <- ggplotly(genre_play_time)
+      return(newFig)
     }
   )
+  
+
 }
 
 # Run the application 
