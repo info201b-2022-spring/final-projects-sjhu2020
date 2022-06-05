@@ -15,7 +15,7 @@ knitr::include_graphics(c('images/chart1.jpeg', 'images/chart2.jpeg', "images/ch
 
 Based on chart 1 (Top Left), we can conclude that action games is the most popular one, however, people spend the most time to finish strategy games.
 
-For chart 2 (Top Right), from pre-COVID to present, we can conclude that VR games is the most popular based on searching, though it is important to keep in mind: VR games can have many genres as well, with some games like Minecraft and Among Us having a VR version.
+For chart 2 (Top Right), from pre-COVID to present, we can conclude that VR games is the most popular based on searching, though it is important to keep in mind: VR games can have many genres as well, with some games like [Minecraft](https://www.minecraft.net/en-us/vr) and [Among Us](https://www.innersloth.com/games/among-us-vr/) having a VR version.
 
 Based on chart 3 (Bottom), we can conclude that Real Time Strategy (RTS) is the most popular video game genre.
 

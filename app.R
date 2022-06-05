@@ -15,13 +15,13 @@ games_df <- read.csv("data/Games.csv", encoding = "UTF-8")
 summary_page <- tabPanel( # initializing our pages as variables will make organization much easier
   "Summary", # text(a title) is required at minimum, cannot be empty
   titlePanel("Summary of our project"),
-  includeMarkdown("summary.Rmd")
+  #includeHTML("summary.html")
   
 ) 
 
 analysis_page <- tabPanel(
   "Intro",
-  includeMarkdown("intro.Rmd")
+  #includeHTML("intro.html")
 ) 
 
 cloud_page<- tabPanel(

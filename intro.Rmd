@@ -1,5 +1,3 @@
-{\rtf1}
-
 ---
 title: "INTRODUCTION"
 output: html_document
