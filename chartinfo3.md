@@ -1,0 +1,3 @@
+### Seeing the Trend of Video Game Genre Searches as Time goes by
+
+Our group wanted to see if there was any impact on video game usage due to Covid-19. To do this, we used Google Trend to see the how often the terms (video game genres) were searched. However, instead of putting sport games, VR was used instead since sport games often referred to the literal ones such as MLB or NBA instead of FIFA or 2K games. In addition to just looking at it, we added a widget so we can select the time frame we wanted to observe. This can let us see the overall trend and also zoom in on and time frame we wanted to observe, in our case, from around spring of 2020 to the end of 2020. At the bottom, there is also a table to see actual values.

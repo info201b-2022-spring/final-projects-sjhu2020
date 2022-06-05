@@ -32,6 +32,7 @@ cloud_page<- tabPanel(
 
 time_spent <- tabPanel(
   "Time Spent",
+  includeMarkdown("chartinfo2.md"),
   #includeCSS("styles.css"),
   sidebarPanel( # some reorganizing
     h3("Select Genre"),
@@ -51,6 +52,7 @@ time_spent <- tabPanel(
 
 genre_trend <- tabPanel(
   "Genre Trend",
+  includeMarkdown("chartinfo3.md"),
   #includeCSS("styles.css"),
   sidebarPanel( # some reorganizing
       h3("Select Time"),
@@ -64,9 +66,9 @@ genre_trend <- tabPanel(
     ),
     
     mainPanel(
-      plotOutput(outputId = 'line'),
-      dataTableOutput(outputId = "tableLine")
-    )
+      plotOutput(outputId = 'line')
+    ),
+  dataTableOutput(outputId = "tableLine")
 
 )
 
