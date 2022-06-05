@@ -7,9 +7,8 @@ library(lubridate)
 library(reshape2)
 library(tidyverse)
 library(knitr)
+library(markdown)
 
-
-char_df <- read.csv("data/characters.csv")
 timeline_df <- read.csv("data/multiTimeline.csv")
 games_df <- read.csv("data/Games.csv", encoding = "UTF-8")
 
@@ -27,7 +26,21 @@ analysis_page <- tabPanel(
 
 cloud_page<- tabPanel(
   "Word Cloud Page",
-  plotOutput(outputId = 'cloud')
+  sidebarPanel( # some reorganizing
+    h3("Select Time"),
+    sliderInput(
+      inputId = "year",
+      label = "Choose a Year",
+      min = 1984,
+      max = 2020,
+      value = c(1984, 2020),
+      sep = ""
+    ),
+  ),
+  
+  mainPanel(
+    plotOutput(outputId = 'cloud')
+  )
 )
 
 time_spent <- tabPanel(
@@ -41,8 +54,8 @@ time_spent <- tabPanel(
       label = "Choose the Game Genre",
       choices = list("Action" , "Adventure", "Simulation", "Sports", "Strategy")
     ),
-    bsTooltip(id = "someInput", title = "This is an input", 
-              placement = "left", trigger = "hover")
+    # bsTooltip(id = "someInput", title = "This is an input", 
+    #          placement = "left", trigger = "hover")
   ),
   
   mainPanel(
@@ -55,19 +68,19 @@ genre_trend <- tabPanel(
   includeMarkdown("chartinfo3.md"),
   #includeCSS("styles.css"),
   sidebarPanel( # some reorganizing
-      h3("Select Time"),
-      sliderInput(
-        inputId = "time",
-        label = "Choose the Time Frame",
-        min = as.Date("2019-01-06"),
-        max = as.Date("2022-05-15"),
-        value = c(as.Date("2019-01-06"), as.Date("2022-05-15"))
-      ),
+    h3("Select Time"),
+    sliderInput(
+      inputId = "time",
+      label = "Choose the Time Frame",
+      min = as.Date("2019-01-06"),
+      max = as.Date("2022-05-15"),
+      value = c(as.Date("2019-01-06"), as.Date("2022-05-15"))
     ),
+  ),
     
-    mainPanel(
-      plotOutput(outputId = 'line')
-    ),
+  mainPanel(
+    plotOutput(outputId = 'line')
+  ),
   dataTableOutput(outputId = "tableLine")
 
 )
@@ -143,6 +156,25 @@ server <- function(session, input, output) {
       
       newFig <- ggplotly(genre_play_time)
       return(newFig)
+    }
+  )
+  
+  output$cloud <- renderPlot(
+    {
+      games_df$Release <- lapply(str_replace_all(games_df$Release, '[^0-9]', ''), year_long)
+      year_long <- function(year_short) {
+        year_short <- as.numeric(year_short)
+        if (year_short < 84) {
+          year_short <- 2000 + year_short
+        } else {
+          year_short <- 1900 + year_short
+        }
+      }
+      genre_df <- filter(games_df, Release <= input$year[1])
+      genres_grouped_df <- group_by(genres_df, Genre)
+      genres_grouped_freq_df <- summarize(genres_grouped_df, Total = length(Genre))
+      wordcloud(genres_grouped_freq_df$Genre , genres_grouped_freq_df$Total)
+
     }
   )
   
