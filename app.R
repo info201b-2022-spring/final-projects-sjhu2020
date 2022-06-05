@@ -15,17 +15,16 @@ games_df <- read.csv("data/Games.csv", encoding = "UTF-8")
 summary_page <- tabPanel( # initializing our pages as variables will make organization much easier
   "Summary", # text(a title) is required at minimum, cannot be empty
   titlePanel("Summary of our project"),
-  #includeHTML("summary.html")
-  
+  includeMarkdown("summary.md")
 ) 
 
 analysis_page <- tabPanel(
-  "Intro",
-  #includeHTML("intro.html")
+  "Introduction",
+  includeMarkdown("intro.md")
 ) 
 
 cloud_page<- tabPanel(
-  "Word Cloud Page",
+  "Word Cloud",
   sidebarPanel( # some reorganizing
     h3("Select Time"),
     sliderInput(
@@ -35,18 +34,18 @@ cloud_page<- tabPanel(
       max = 2020,
       value = c(1984, 2020),
       sep = ""
-    ),
+    )
   ),
   
   mainPanel(
     plotOutput(outputId = 'cloud')
-  )
+  ),
+  dataTableOutput(outputId = "cloudTable")
 )
 
 time_spent <- tabPanel(
   "Time Spent",
   includeMarkdown("chartinfo2.md"),
-  #includeCSS("styles.css"),
   sidebarPanel( # some reorganizing
     h3("Select Genre"),
     selectInput(
@@ -64,7 +63,6 @@ time_spent <- tabPanel(
 genre_trend <- tabPanel(
   "Genre Trend",
   includeMarkdown("chartinfo3.md"),
-  #includeCSS("styles.css"),
   sidebarPanel( # some reorganizing
     h3("Select Time"),
     sliderInput(
@@ -75,12 +73,12 @@ genre_trend <- tabPanel(
       value = c(as.Date("2019-01-06"), as.Date("2022-05-15"))
     ),
   ),
-    
+  
   mainPanel(
     plotOutput(outputId = 'line')
   ),
   dataTableOutput(outputId = "tableLine")
-
+  
 )
 
 # Define UI for application that draws a histogram
@@ -130,16 +128,13 @@ server <- function(session, input, output) {
   output$hist <- renderPlotly(
     {
       file2 <- read_csv(file = "data/video_games.csv")
-      
       needed2 <- file2 %>% 
         select(Title, Metadata.Genres, `Features.Online?`, `Length.All PlayStyles.Average`) %>% 
         filter(Metadata.Genres == input$genre)
-      
       needed2 <- needed2%>% 
         rename(
           `Avg Time Spent (Hr)` = `Length.All PlayStyles.Average`
         )
-      
       genre_play_time <- ggplot(needed2, 
                                 aes(x = `Avg Time Spent (Hr)`)) +
         geom_histogram(fill = "blue", color = "red", alpha = 0.7)+
@@ -150,7 +145,6 @@ server <- function(session, input, output) {
           x = "Average Time Spent (Hr)",
           y = "Amount"
         )
-
       newFig <- ggplotly(genre_play_time)
       return(newFig)
     }
@@ -170,11 +164,28 @@ server <- function(session, input, output) {
       genres_df <- filter(games_df, Release >= input$year[1], Release <= input$year[2])
       genres_grouped_df <- group_by(genres_df, Genre)
       genres_grouped_freq_df <- summarize(genres_grouped_df, Total = length(Genre))
-      cloud <- wordcloud(genres_grouped_freq_df$Genre , genres_grouped_freq_df$Total, scale = c(2, 0.2))
+      cloud <- wordcloud(genres_grouped_freq_df$Genre , genres_grouped_freq_df$Total, scale = c(2, 0.1))
     }
   )
   
-
+  output$cloudTable <- renderDataTable(
+    {
+      year_long <- function(year_short) {
+        year_short <- as.numeric(year_short)
+        if (year_short < 84) {
+          year_short <- 2000 + year_short
+        } else {
+          year_short <- 1900 + year_short
+        }
+      }
+      games_df$Release <- lapply(str_replace_all(games_df$Release, '[^0-9]', ''), year_long)
+      genres_df <- filter(games_df, Release >= input$year[1], Release <= input$year[2])
+      genres_grouped_df <- group_by(genres_df, Genre)
+      genres_grouped_freq_df <- summarize(genres_grouped_df, Total = length(Genre))
+      return(genres_grouped_freq_df)
+    }
+  )
+  
 }
 
 # Run the application 

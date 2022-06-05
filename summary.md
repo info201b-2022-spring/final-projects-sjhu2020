@@ -1,17 +1,10 @@
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
-
-# Summary
+### Summary
 
 This is the summary page of our final project, we will include 3 charts and make a conclusion for each.
 
-```{r, echo=FALSE,out.width="50%", fig.align = "center", fig.show='hold', fig.cap= 'Charts'}
+![Summary Charts](images/summary.jpeg)
 
-knitr::include_graphics(c('images/chart1.jpeg', 'images/chart2.jpeg', "images/chart3.jpeg" ))
-```
-
-# Conclusion
+### Conclusion
 
 Based on chart 1 (Top Left), we can conclude that action games is the most popular one, however, people spend the most time to finish strategy games.
 
