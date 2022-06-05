@@ -54,8 +54,6 @@ time_spent <- tabPanel(
       label = "Choose the Game Genre",
       choices = list("Action" , "Adventure", "Simulation", "Sports", "Strategy")
     ),
-    # bsTooltip(id = "someInput", title = "This is an input", 
-    #          placement = "left", trigger = "hover")
   ),
   
   mainPanel(
@@ -153,7 +151,6 @@ server <- function(session, input, output) {
           y = "Amount"
         )
 
-      
       newFig <- ggplotly(genre_play_time)
       return(newFig)
     }
@@ -161,7 +158,6 @@ server <- function(session, input, output) {
   
   output$cloud <- renderPlot(
     {
-      games_df$Release <- lapply(str_replace_all(games_df$Release, '[^0-9]', ''), year_long)
       year_long <- function(year_short) {
         year_short <- as.numeric(year_short)
         if (year_short < 84) {
@@ -170,11 +166,11 @@ server <- function(session, input, output) {
           year_short <- 1900 + year_short
         }
       }
-      genre_df <- filter(games_df, Release <= input$year[1])
+      games_df$Release <- lapply(str_replace_all(games_df$Release, '[^0-9]', ''), year_long)
+      genres_df <- filter(games_df, Release >= input$year[1], Release <= input$year[2])
       genres_grouped_df <- group_by(genres_df, Genre)
       genres_grouped_freq_df <- summarize(genres_grouped_df, Total = length(Genre))
-      wordcloud(genres_grouped_freq_df$Genre , genres_grouped_freq_df$Total)
-
+      cloud <- wordcloud(genres_grouped_freq_df$Genre , genres_grouped_freq_df$Total, scale = c(2, 0.2))
     }
   )
   
