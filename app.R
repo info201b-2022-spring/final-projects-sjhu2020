@@ -25,6 +25,7 @@ analysis_page <- tabPanel(
 
 cloud_page<- tabPanel(
   "Word Cloud",
+  includeMarkdown("chartinfo1.md"),
   sidebarPanel( # some reorganizing
     h3("Select Time"),
     sliderInput(
@@ -84,6 +85,7 @@ genre_trend <- tabPanel(
 # Define UI for application that draws a histogram
 ui <- navbarPage( # to have multiple pages use navbar instead of fluid
   "Video Game Analysis",
+  includeCSS("styles.css"),
   analysis_page,
   cloud_page,
   time_spent,
